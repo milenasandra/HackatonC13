@@ -8,6 +8,7 @@ const Course = require('./course')
 const Novelty = require('./novelty')
 const Article = require('./article')
 const Cohort = require('./cohort')
+const Tour = require('./tour')
 
 module.exports = {
   Category,
@@ -21,4 +22,5 @@ module.exports = {
   Novelty,
   Article,
   Cohort,
+  Tour,
 }

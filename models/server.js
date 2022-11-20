@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
 
-const { dbConnection } = require('../database/config.db')
+const {dbConnection} = require('../database/config.db')
 
 class Server {
   constructor() {
@@ -22,6 +22,7 @@ class Server {
       courses: '/api/courses',
       novelties: '/api/novelties',
       articles: '/api/articles',
+      tours: '/api/tours',
     }
 
     // Conectar a base datos
@@ -71,6 +72,7 @@ class Server {
     this.app.use(this.paths.cohorts, require('../routes/cohort.routes'))
     this.app.use(this.paths.novelties, require('../routes/novelty.routes'))
     this.app.use(this.paths.articles, require('../routes/article.routes'))
+    this.app.use(this.paths.tours, require('../routes/tour.routes'))
   }
 
   listen() {

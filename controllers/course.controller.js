@@ -1,14 +1,14 @@
-const { request, response } = require('express')
-const { DateTime } = require('luxon')
-const { Course } = require('../models')
-const { serverErrorHandler } = require('../helpers')
+const {request, response} = require('express')
+const {DateTime} = require('luxon')
+const {Course} = require('../models')
+const {serverErrorHandler} = require('../helpers')
 
 const create = async (req = request, res = response) => {
   try {
-    let { name, description, duration, maxCapacity, minRequired } = req.body
+    let {name, description, duration, maxCapacity, minRequired} = req.body
     name = name.toLowerCase().trim()
 
-    const courseDB = await Course.findOne({ name })
+    const courseDB = await Course.findOne({name})
     if (courseDB) {
       return res.status(400).json({
         msg: `Ya existe el curso: ${name}`,
@@ -38,11 +38,11 @@ const create = async (req = request, res = response) => {
 
 const findAll = async (req = request, res = response) => {
   try {
-    let { from = 0, lot = 10 } = req.query
+    let {from = 0, lot = 10} = req.query
     from = from <= 0 || isNaN(from) ? 0 : from - 1
     lot = lot <= 0 || isNaN(lot) ? 10 : lot
 
-    const query = { status: true }
+    const query = {status: true}
 
     const [courses, total] = await Promise.all([
       Course.find(query).populate('user').skip(from).limit(lot),
@@ -68,7 +68,7 @@ const findAll = async (req = request, res = response) => {
 
 const update = async (req = request, res = response) => {
   try {
-    let { name, description, duration, maxCapacity, minRequired } = req.body
+    let {name, description, duration, maxCapacity, minRequired} = req.body
 
     const data = {
       updatedAt: DateTime.now(),
@@ -77,7 +77,7 @@ const update = async (req = request, res = response) => {
     if (name) {
       name = name.toLowerCase().trim()
 
-      const courseDB = await Course.findOne({ name })
+      const courseDB = await Course.findOne({name})
       if (courseDB) {
         return res.status(400).json({
           msg: `Ya existe el curso: ${name}`,
@@ -111,7 +111,7 @@ const deleteById = async (req = request, res = response) => {
         status: false,
         updatedAt: DateTime.now(),
       },
-      { new: true }
+      {new: true}
     )
     res.json({
       course,
